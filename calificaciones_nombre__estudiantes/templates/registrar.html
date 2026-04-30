@@ -1,0 +1,9 @@
+<h2>Registrar Calificación</h2>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Guardar</button>
+</form>
+
+<a href="{% url 'listar' %}">Volver</a>
