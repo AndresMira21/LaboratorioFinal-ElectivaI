@@ -1,26 +1,112 @@
-<h2>Lista de Calificaciones</h2>
+{% extends 'calificaciones/base.html' %}
 
-<a href="{% url 'registrar' %}">Nueva Calificación</a>
+{% block title %}Calificaciones{% endblock %}
 
-<table border="1">
-<tr>
-    <th>Nombre</th>
-    <th>Asignatura</th>
-    <th>Nota 1</th>
-    <th>Nota 2</th>
-    <th>Nota 3</th>
-    <th>Promedio</th>
-</tr>
+{% block content %}
 
-{% for c in calificaciones %}
-<tr>
-    <td>{{ c.nombre_estudiante }}</td>
-    <td>{{ c.asignatura }}</td>
-    <td>{{ c.nota1 }}</td>
-    <td>{{ c.nota2 }}</td>
-    <td>{{ c.nota3 }}</td>
-    <td>{{ c.promedio }}</td>
-</tr>
-{% endfor %}
+<!-- Encabezado y resumen -->
+<div class="row mb-4">
+    <div class="col-md-8">
+        <h2><i class="bi bi-list-check"></i> Calificaciones Registradas</h2>
+    </div>
+    <div class="col-md-4 text-end">
+        <a href="{% url 'crear' %}" class="btn btn-success">
+            <i class="bi bi-plus-circle"></i> Nueva Calificación
+        </a>
+    </div>
+</div>
 
-</table>
+<!-- Tarjetas de resumen -->
+<div class="row mb-4">
+    <div class="col-md-4">
+        <div class="card text-center p-3">
+            <h2 class="text-primary">{{ total }}</h2>
+            <p class="text-muted mb-0">Total Registros</p>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card text-center p-3">
+            <h2 class="text-success">{{ promedio_general }}</h2>
+            <p class="text-muted mb-0">Promedio General</p>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card text-center p-3">
+            <a href="{% url 'promedio_general' %}" class="text-decoration-none">
+                <h2 class="text-info"><i class="bi bi-bar-chart"></i></h2>
+                <p class="text-muted mb-0">Ver Estadísticas</p>
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- Tabla de calificaciones -->
+<div class="card">
+    <div class="card-body">
+        {% if calificaciones %}
+        <table class="table table-hover align-middle">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Estudiante</th>
+                    <th>Identificación</th>
+                    <th>Asignatura</th>
+                    <th class="text-center">Nota 1</th>
+                    <th class="text-center">Nota 2</th>
+                    <th class="text-center">Nota 3</th>
+                    <th class="text-center">Promedio</th>
+                    <th class="text-center">Estado</th>
+                    <th class="text-center">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for c in calificaciones %}
+                <tr>
+                    <td>{{ c.id }}</td>
+                    <td><strong>{{ c.nombre_estudiante }}</strong></td>
+                    <td>{{ c.identificacion }}</td>
+                    <td>{{ c.asignatura }}</td>
+                    <td class="text-center">{{ c.nota1 }}</td>
+                    <td class="text-center">{{ c.nota2 }}</td>
+                    <td class="text-center">{{ c.nota3 }}</td>
+                    <td class="text-center">
+                        <strong class="{% if c.promedio >= 3 %}text-success{% else %}text-danger{% endif %}">
+                            {{ c.promedio }}
+                        </strong>
+                    </td>
+                    <td class="text-center">
+                        {% if c.promedio >= 3.0 %}
+                            <span class="badge bg-success">Aprobado</span>
+                        {% else %}
+                            <span class="badge bg-danger">Reprobado</span>
+                        {% endif %}
+                    </td>
+                    <td class="text-center">
+                        <a href="{% url 'editar' c.pk %}" class="btn btn-sm btn-outline-warning">
+                            <i class="bi bi-pencil"></i>
+                        </a>
+                        <a href="{% url 'eliminar' c.pk %}" class="btn btn-sm btn-outline-danger">
+                            <i class="bi bi-trash"></i>
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+            <tfoot>
+                <tr class="table-dark">
+                    <td colspan="7" class="text-end fw-bold">Promedio General:</td>
+                    <td class="text-center fw-bold">{{ promedio_general }}</td>
+                    <td colspan="2"></td>
+                </tr>
+            </tfoot>
+        </table>
+        {% else %}
+        <div class="text-center py-5">
+            <i class="bi bi-clipboard-x" style="font-size: 3rem; color: #ccc;"></i>
+            <p class="text-muted mt-3">No hay calificaciones registradas.</p>
+            <a href="{% url 'crear' %}" class="btn btn-success">Registrar primera calificación</a>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
