@@ -1,4 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from .models import Calificacion
+from .forms import CalificacionForm
 
 # Create your views here.
 def crear_calificacion(request):
