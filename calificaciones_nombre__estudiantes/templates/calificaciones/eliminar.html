@@ -1,0 +1,9 @@
+<h2>¿Eliminar registro?</h2>
+<p>{{ calificacion.nombre_estudiante }}</p>
+
+<form method="post">
+    {% csrf_token %}
+    <button type="submit">Sí, eliminar</button>
+</form>
+
+<a href="{% url 'listar' %}">Cancelar</a>
