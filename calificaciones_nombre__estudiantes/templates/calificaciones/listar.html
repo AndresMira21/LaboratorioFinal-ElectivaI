@@ -1,0 +1,26 @@
+<h2>Lista de Calificaciones</h2>
+
+<a href="{% url 'registrar' %}">Nueva Calificación</a>
+
+<table border="1">
+<tr>
+    <th>Nombre</th>
+    <th>Asignatura</th>
+    <th>Nota 1</th>
+    <th>Nota 2</th>
+    <th>Nota 3</th>
+    <th>Promedio</th>
+</tr>
+
+{% for c in calificaciones %}
+<tr>
+    <td>{{ c.nombre_estudiante }}</td>
+    <td>{{ c.asignatura }}</td>
+    <td>{{ c.nota1 }}</td>
+    <td>{{ c.nota2 }}</td>
+    <td>{{ c.nota3 }}</td>
+    <td>{{ c.promedio }}</td>
+</tr>
+{% endfor %}
+
+</table>

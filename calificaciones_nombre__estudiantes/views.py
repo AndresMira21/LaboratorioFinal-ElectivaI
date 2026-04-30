@@ -1,3 +1,4 @@
+
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
@@ -6,7 +7,6 @@ from django.contrib import messages
 from django.db.models import Avg
 from .models import Calificacion
 from .forms import CalificacionForm, RegistroUsuarioForm
-
 
 # ─────────────────────────────────────────
 # AUTENTICACIÓN
@@ -178,4 +178,5 @@ def promedio_general(request):
         'aprobados': aprobados,
         'reprobados': reprobados,
         'top_estudiantes': top_estudiantes
+
     })
